@@ -2,20 +2,36 @@ package models.physical_objects.pendulums.simple;
 
 import models.physical_objects.pendulums.Pendulum;
 
+import static settings.Settings.g;
+
 public class SimplePendulum extends Pendulum {
     /**
      * Angle of the pendulum in radians.
      */
     private double angle;
 
-    public SimplePendulum(double angle) {
+    /**
+     * Length of the pendulum in meters.
+     */
+    private double length;
+
+    /**
+     * Mass of the pendulum in kg.
+     */
+    private double mass;
+
+    public SimplePendulum(double angle, double length, double mass) {
         super();
         setAngle(angle);
     }
 
     @Override
-    public void update() {
-        angle = (angle + 0.5) % (2 * Math.PI);
+    public void update(int elapsedTime) {
+        // using euler's method with simple pendulum equation
+
+        double angularAcceleration = -g / length * Math.sin(angle);
+        double angularVelocity = angularAcceleration * millisTimeToSeconds(elapsedTime);
+        setAngle(angle + angularVelocity * millisTimeToSeconds(elapsedTime));
     }
 
     public double getAngle() {

@@ -36,10 +36,10 @@ public class Grid {
         return cols;
     }
 
-    public void update() {
+    public void update(int elapsedTime) {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                grid[i][j].getPhysicalObject().update();
+                grid[i][j].getPhysicalObject().update(elapsedTime);
             }
         }
     }
