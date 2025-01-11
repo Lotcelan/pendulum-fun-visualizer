@@ -1,6 +1,7 @@
 import models.Grid;
-import models.PendulumGrid;
 import processing.core.PApplet;
+import strategies.draw.SimplePendulumPosNegDrawStrategy;
+import strategies.fill.SimplePendulummFillStrategy;
 
 public class Main extends PApplet{
 
@@ -12,13 +13,16 @@ public class Main extends PApplet{
     }
 
     public void setup(){
-        grid = new PendulumGrid(this, 10, 10);
+        grid = new Grid(10, 10, new SimplePendulummFillStrategy(), new SimplePendulumPosNegDrawStrategy(this));
     }
 
     public void draw(){
         background(255);
+        grid.update();
         grid.draw();
     }
+
+
 
 
     public static void main(String[] args){

@@ -1,25 +1,27 @@
 package models;
-import processing.core.PApplet;
+import models.cells.Cell;
+import strategies.draw.DrawStrategy;
+import strategies.fill.FillStrategy;
 
-public abstract class Grid {
+public class Grid {
+    private FillStrategy fillStrategy;
+    private DrawStrategy drawStrategy;
+
     private int rows;
     private int cols;
     private Cell[][] grid;
-    private PApplet sketch;
 
-    public Grid(int rows, int cols) {
-        this.sketch = sketch;
+    public Grid(int rows, int cols, FillStrategy fillStrategy, DrawStrategy drawStrategy) {
         this.rows = rows;
         this.cols = cols;
         this.grid = new Cell[rows][cols];
+        this.fillStrategy = fillStrategy;
+        this.drawStrategy = drawStrategy;
+        fillStrategy.fill(this);
     }
 
     public void draw() {
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                grid[i][j].draw();
-            }
-        }
+        drawStrategy.draw(this);
     }
 
     public Cell getCell(int i, int j) {
@@ -34,8 +36,12 @@ public abstract class Grid {
         return cols;
     }
 
-    public PApplet getSketch() {
-        return sketch;
+    public void update() {
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                grid[i][j].getPhysicalObject().update();
+            }
+        }
     }
 
     public void setCell(int i, int j, Cell cell) {
