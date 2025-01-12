@@ -18,7 +18,7 @@ public class SimplePendulumMiddleSwitchDrawStrategy extends DrawStrategy {
             for (int j = 0; j < grid.getCols(); j++) {
                 try {
                     SimplePendulum pendulum = (SimplePendulum) grid.getCell(i, j).getPhysicalObject();
-                    if (pendulum.getAngle() >  3* Math.PI / 2) {
+                    if (pendulum.getAngle() >  Math.PI) {
                         sketch.fill(0);
                     } else {
                         sketch.fill(255);
