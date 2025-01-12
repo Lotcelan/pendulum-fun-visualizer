@@ -2,6 +2,7 @@ import models.Grid;
 import processing.core.PApplet;
 import settings.Settings;
 import strategies.draw.SimplePendulumMiddleSwitchDrawStrategy;
+import strategies.draw.SimplePendulumRainbowDrawStrategy;
 import strategies.fill.SimplePendulummFillStrategy;
 
 public class Main extends PApplet {
@@ -14,7 +15,8 @@ public class Main extends PApplet {
     }
 
     public void setup() {
-        grid = new Grid(Settings.ROWS, Settings.COLS, new SimplePendulummFillStrategy(), new SimplePendulumMiddleSwitchDrawStrategy(this));
+        frameRate(30);
+        grid = new Grid(Settings.ROWS, Settings.COLS, new SimplePendulummFillStrategy(), new SimplePendulumRainbowDrawStrategy(this));
         lastUpdateTime = millis();
     }
 
@@ -28,7 +30,7 @@ public class Main extends PApplet {
         grid.draw();
 
         // Afficher le temps écoulé dans la console
-        println("Temps écoulé depuis la dernière mise à jour : " + elapsedTime + " ms");
+        //println("Temps écoulé depuis la dernière mise à jour : " + elapsedTime + " ms");
     }
 
     public static void main(String[] args) {

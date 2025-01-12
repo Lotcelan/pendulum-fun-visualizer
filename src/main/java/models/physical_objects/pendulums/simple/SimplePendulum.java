@@ -20,20 +20,27 @@ public class SimplePendulum extends Pendulum {
      */
     private double mass;
 
+    private double initialAngle;
+
+    /**
+     * Current time in seconds elapsed since the beginning of the simulation.
+     */
+    private double t;
+
     public SimplePendulum(double angle, double length, double mass) {
         super();
+        this.initialAngle = fixAngle(angle);
         setAngle(angle);
+        this.length = length;
+        this.mass = mass;
+        this.t = 0.0;
     }
 
     @Override
     public void update(int elapsedTime) {
-        // using euler's method with simple pendulum equation
-
-        double angularAcceleration = -g / length * Math.sin(angle);
-        double angularVelocity = angularAcceleration * millisTimeToSeconds(elapsedTime);
-        setAngle(angle + angularVelocity * millisTimeToSeconds(elapsedTime));
+        t += millisTimeToSeconds(elapsedTime);
+        setAngle(initialAngle * Math.cos(Math.sqrt(g / length) * t));
     }
-
     public double getAngle() {
         //System.out.println("SimplePendulum getAngle");
         return angle;
@@ -44,10 +51,13 @@ public class SimplePendulum extends Pendulum {
      * @param angle
      */
     public void setAngle(double angle) {
-        if (angle < 0) {
-            this.angle = 2 * Math.PI + angle;
-        } else {
-            this.angle = angle % (2 * Math.PI);
+        this.angle = fixAngle(angle);
+    }
+
+    public double fixAngle(double angle) {
+        while (angle < 0) {
+            angle += 2 * Math.PI;
         }
+        return angle % (2 * Math.PI);
     }
 }
